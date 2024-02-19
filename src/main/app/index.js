@@ -3,7 +3,7 @@ import fsPromises from 'fs/promises'
 import { exec } from 'child_process'
 import dayjs from 'dayjs'
 import log from 'electron-log'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, nativeTheme, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, nativeTheme } from 'electron'
 import { isChildOfDirectory } from 'common/filesystem/paths'
 import { isLinux, isOsx, isWindows } from '../config'
 import parseArgs from '../cli/parser'
@@ -500,6 +500,8 @@ class App {
     })
 
     ipcMain.on('app-open-directory-by-id', (windowId, pathname, openInSameWindow) => {
+      // 增加针对目录的处理
+      this._accessor.preferences.watchedFolderChange(pathname)
       const { openFolderInNewWindow } = this._accessor.preferences.getAll()
       if (openInSameWindow || !openFolderInNewWindow) {
         const editor = this._windowManager.get(windowId)
@@ -575,10 +577,6 @@ class App {
     ipcMain.handle('mt::keybinding-save-user-keybindings', async (event, userKeybindings) => {
       const { keybindings } = this._accessor
       return keybindings.setUserKeybindings(userKeybindings)
-    })
-
-    ipcMain.handle('mt::fs-trash-item', async (event, fullPath) => {
-      return shell.trashItem(fullPath)
     })
   }
 }

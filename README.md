@@ -2,6 +2,8 @@
 ### Change MarkText to support one click publish
 -----
 ### The following is the original readme
+npm config set msvs_version 2019
+Nodejs
 ---
 
 
