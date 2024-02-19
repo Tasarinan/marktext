@@ -1,13 +1,3 @@
-
-### Change MarkText to support one click publish
------
-### The following is the original readme
-npm config set msvs_version 2019
-Nodejs
----
-
-
-
 <p align="center"><img src="static/logo-small.png" alt="MarkText" width="100" height="100"></p>
 
 <h1 align="center">MarkText</h1>
